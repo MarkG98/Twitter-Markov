@@ -20,4 +20,4 @@ Next, one must run the script `twitterScraper.py`, and then `markov.py` which wi
 * "Pledge of Allegiance and smarter, I want to talk and begged for his children, grandchildren, great-grandchildren and all who knowingly writes false information."
 
 ## Write-Up/Reflection
-[write-up][writeUp.md]
+[write-up](writeUp.md)
