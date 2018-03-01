@@ -18,3 +18,6 @@ Next, one must run the script `twitterScraper.py`, and then `markov.py` which wi
 * "Border Wall, Military, Pro Life, V.A., Judges 2nd Amendment and lots of GOOD NEWS for the world."
 
 * "Pledge of Allegiance and smarter, I want to talk and begged for his children, grandchildren, great-grandchildren and all who knowingly writes false information."
+
+## Write-Up/Reflection
+[write-up][writeUp.md]
