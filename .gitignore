@@ -93,4 +93,7 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# API keys
+config.py
+
 # End of https://www.gitignore.io/api/python
