@@ -1,6 +1,6 @@
 import tweepy
 from pickle import dump, load
-from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET
+from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET, USER
 
 def collect_tweets():
 
@@ -15,18 +15,19 @@ def collect_tweets():
     page = 1
 
     while True:
-        tweets = api.user_timeline(screen_name='@realDonaldTrump', page=page, count=200, tweet_mode='extended', include_rts=False)
+        tweets = api.user_timeline(screen_name=USER, page=page, count=200, tweet_mode='extended', include_rts=False)
         if tweets:
             for tweet in tweets:
                 # process status here
                 tweets_list.append(tweet)
         else:
-            # done
+            # All done
             break
         page += 1  # next page
     return tweets_list
 
 if __name__ == "__main__":
+
     # created api environment with keys
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
@@ -34,6 +35,6 @@ if __name__ == "__main__":
 
     tweets_list = collect_tweets()
 
-    f = open('donaldTrumpTweets.pickle', 'wb')
+    f = open('Tweets.pickle', 'wb')
     dump(tweets_list, f)
     f.close()

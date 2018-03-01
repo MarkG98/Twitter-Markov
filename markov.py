@@ -2,21 +2,13 @@ import string
 import random
 from pickle import load
 
-f = open('donaldTrumpTweets.pickle', 'rb')
-new_tweets = load(f)
-
-tweets = [tweet.full_text for tweet in new_tweets]
-
-for i in range(len(tweets)):
-    tweets[i] = tweets[i].split()
-
 pref_to_suff = dict()
 end_dict = dict()
 prefix = list()
 
 end_punctuation = ".!?"
 
-def generate_markov_list(data, prefix_length=2):
+def generate_markov_list(data, prefix_length=3):
 
     """
     This function iterates throught the possible prefixes in the data inputed, and puts
@@ -60,7 +52,7 @@ def next_choice(current):
     else:
         return next_keys_list[random.randint(0,len(next_keys_list) - 1)]
 
-def markov(length=20):
+def create_chain(length=4):
 
     """
     This function will iterate through a chain of prefix suffix key value pairs, looking for a next key whose
@@ -78,9 +70,9 @@ def markov(length=20):
 
     start = start_list[random.randint(0,len(start_list) - 1)]
 
-    
-    chain += start[0] + " " + start[1] + " " + pref_to_suff[start][0] + " "
-
+    for word in start:
+        chain += word + " "
+    chain += pref_to_suff[start][0] + " "
     current = pref_to_suff[start][0]
 
     while True:
@@ -89,12 +81,16 @@ def markov(length=20):
         if next_key == None:
             return None
 
-        if len(pref_to_suff[next_key]) > 0 or pref_to_suff[next_key] == None:
+        if len(pref_to_suff[next_key]) > 0:
             index = random.randint(0,len(pref_to_suff[next_key]) - 1)
         else:
             index = 0
 
-        chain += next_key[1] + " " + pref_to_suff[next_key][index] + " "
+        for word in next_key:
+            if word != next_key[0]:
+                chain += word + " "
+        chain += pref_to_suff[next_key][index] + " "
+
         current = pref_to_suff[next_key][index]
         length -= 1
 
@@ -104,13 +100,28 @@ def markov(length=20):
                     chain += key[1]
                     return chain
 
+def markov():
+
+    """
+    This functino attempts to create the chain of the specified length. If in the process, there
+    are no first words in keys that match the previous suffix it tries again.
+    """
+
+    result = None
+    while result == None:
+        result = create_chain()
+    print(result)
 
 if __name__ == "__main__":
+    f = open('Tweets.pickle', 'rb')
+    new_tweets = load(f)
+
+    tweets = [tweet.full_text for tweet in new_tweets]
+
+    for i in range(len(tweets)):
+        tweets[i] = tweets[i].split()
+
     for i in range(len(tweets)):
         generate_markov_list(tweets[i])
 
-    print(pref_to_suff)
-    result = None
-    while result == None:
-        result = markov()
-    print(result)
+    markov()
