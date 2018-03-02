@@ -8,7 +8,7 @@ prefix = list()
 
 end_punctuation = ".!?"
 
-def generate_markov_list(data, prefix_length=3):
+def generate_markov_list(data, prefix_length=5):
 
     """
     This function iterates throught the possible prefixes in the data inputed, and puts
@@ -52,7 +52,7 @@ def next_choice(current):
     else:
         return next_keys_list[random.randint(0,len(next_keys_list) - 1)]
 
-def create_chain(length=4):
+def create_chain(length=5):
 
     """
     This function will iterate through a chain of prefix suffix key value pairs, looking for a next key whose
