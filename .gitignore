@@ -96,4 +96,7 @@ ENV/
 # API keys
 config.py
 
+# Scraped Tweets
+*Tweets.pickle
+
 # End of https://www.gitignore.io/api/python
