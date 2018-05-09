@@ -5,6 +5,8 @@ from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN
 
 class TwitterScraper(object):
 
+    #TODO: make the scrapper inherit from the list object(?)
+
     def __init__(self, user):
 
         """
@@ -12,7 +14,7 @@ class TwitterScraper(object):
         list and saves the file where the class was initialized
 
         user: twitter user name of account to scrape
-        
+
         return: list of original tweets from the account holder
         """
 
