@@ -3,9 +3,7 @@ from pickle import dump, load
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET
 
 
-class TwitterScraper(object):
-
-    #TODO: make the scrapper inherit from the list object(?)
+class TwitterScraper(list):
 
     def __init__(self, user):
 
@@ -23,8 +21,7 @@ class TwitterScraper(object):
         auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
         api = tweepy.API(auth)
 
-        # initialize list of tweets and page counter
-        tweets_list = []
+        # initialize page counter
         page = 1
 
         while True:
@@ -32,12 +29,12 @@ class TwitterScraper(object):
             if tweets:
                 for tweet in tweets:
                     # process status here
-                    tweets_list.append(tweet)
+                    self.append(tweet)
             else:
                 # All done
                 break
             page += 1  # next page
 
         f = open(str(user) + 'Tweets.pickle', 'wb')
-        dump(tweets_list, f)
+        dump(self, f)
         f.close()
