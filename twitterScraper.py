@@ -1,40 +1,41 @@
 import tweepy
 from pickle import dump, load
-from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET, USER
+from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET
 
-def collect_tweets():
 
-    """
-    This function scrapes the twitter account of the screen name put in as a parameter to api.user_timeline
-    for non-retweeted tweets.
+class TwitterScraper(object):
 
-    return: list of original tweets from the account holder
-    """
+    def __init__(self, user):
 
-    tweets_list = []
-    page = 1
+        """
+        Upon initialization, the class scrapes the twitter account of the user name entered as a parameter. It stores the tweets it finds in a long
+        list and saves the file where the class was initialized
 
-    while True:
-        tweets = api.user_timeline(screen_name=USER, page=page, count=200, tweet_mode='extended', include_rts=False)
-        if tweets:
-            for tweet in tweets:
-                # process status here
-                tweets_list.append(tweet)
-        else:
-            # All done
-            break
-        page += 1  # next page
-    return tweets_list
+        user: twitter user name of account to scrape
+        
+        return: list of original tweets from the account holder
+        """
 
-if __name__ == "__main__":
+        # created api environment with keys
+        auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
+        api = tweepy.API(auth)
 
-    # created api environment with keys
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
-    api = tweepy.API(auth)
+        # initialize list of tweets and page counter
+        tweets_list = []
+        page = 1
 
-    tweets_list = collect_tweets()
+        while True:
+            tweets = api.user_timeline(screen_name=str(user), page=page, count=200, tweet_mode='extended', include_rts=False)
+            if tweets:
+                for tweet in tweets:
+                    # process status here
+                    tweets_list.append(tweet)
+            else:
+                # All done
+                break
+            page += 1  # next page
 
-    f = open('Tweets.pickle', 'wb')
-    dump(tweets_list, f)
-    f.close()
+        f = open(str(user) + 'Tweets.pickle', 'wb')
+        dump(tweets_list, f)
+        f.close()
