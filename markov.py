@@ -2,6 +2,8 @@ import string
 import random
 from pickle import load
 
+from twitterScraper import TwitterScraper
+
 pref_to_suff = dict()
 end_dict = dict()
 prefix = list()
@@ -106,14 +108,15 @@ def markov():
     This functino attempts to create the chain of the specified length. If in the process, there
     are no first words in keys that match the previous suffix it tries again.
     """
-
     result = None
     while result == None:
         result = create_chain()
     print(result)
 
 if __name__ == "__main__":
-    f = open('Tweets.pickle', 'rb')
+    user = '@debcha'
+    scrape = TwitterScraper(user)
+    f = open(user + 'Tweets.pickle', 'rb')
     new_tweets = load(f)
 
     tweets = [tweet.full_text for tweet in new_tweets]
