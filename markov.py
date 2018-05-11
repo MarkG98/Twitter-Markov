@@ -1,7 +1,6 @@
 import string
 import random
 from pickle import load
-import os
 
 from twitterScraper import TwitterScraper
 
@@ -14,7 +13,7 @@ class Markov(object):
 
         self.end_punctuation = ".!?"
 
-    def generate_markov_list(self, data, prefix_length=5):
+    def generate_markov_list(self, data, prefix_length=3):
 
         """
         This function iterates throught the possible prefixes in the data inputed, and puts
@@ -26,6 +25,7 @@ class Markov(object):
         prefix_length: length of prefix in words
         """
 
+        # creates overall list of prefix-suffix pairs
         for i in range(len(data) - prefix_length - 1):
             self.prefix = data[i:i + prefix_length]
             try:
@@ -33,8 +33,9 @@ class Markov(object):
             except KeyError:
                 self.pref_to_suff[tuple(self.prefix)] = [data[i + prefix_length]]
 
+        # creates dictionary of possible endings
         for key in self.pref_to_suff:
-            if key[1][-1] == '.' or key[1][-1] == '!' or key[1][-1] == '?':
+            if key[1][-1] in self.end_punctuation:
                 self.end_dict[key] = self.pref_to_suff[key]
 
     def next_choice(self, current):
@@ -47,11 +48,13 @@ class Markov(object):
         return: key of next key value pair to add to chain
         """
 
+        # creates list of possible next orefixes given current suffix
         next_keys_list = list()
         for key in self.pref_to_suff:
             if key[0] == current:
                 next_keys_list.append(key)
 
+        # picks next random key or returns None is none available
         if len(next_keys_list) == 0:
             print("No next key, restarating tweet generation..." + '\n')
             return None
@@ -69,19 +72,24 @@ class Markov(object):
 
         chain = ""
 
+        # creates list of possible starts by picking prefixes that are capital
         start_list = list()
         for key in self.pref_to_suff:
             if key[0][0].isupper() and key[0][-1] not in self.end_punctuation:
                 start_list.append(key)
 
+        # picks random start from start list
         start = start_list[random.randint(0,len(start_list) - 1)]
 
+        # adds start prefix and suffix to chain, and assigns new current
         for word in start:
             chain += word + " "
         chain += self.pref_to_suff[start][0] + " "
         current = self.pref_to_suff[start][0]
 
+        # build chain
         while True:
+            # gets next keys or returns None if none
             next_key = self.next_choice(current)
 
             if next_key == None:
@@ -100,6 +108,7 @@ class Markov(object):
             current = self.pref_to_suff[next_key][index]
             length -= 1
 
+            # once length reaches optimal value, check to see if it's possible to stop
             if length < 1:
                 for key in self.end_dict:
                     if key[0] == current:
@@ -111,8 +120,11 @@ class Markov(object):
         """
         This function attempts to create the chain of the specified length. If in the process, there
         are no first words in keys that match the previous suffix it tries again.
+
+        user: desired twitter account to scrape
         """
 
+        # scrape and organize tweets
         scrape = TwitterScraper(user)
         f = open(user + 'Tweets.pickle', 'rb')
         new_tweets = load(f)
@@ -122,15 +134,22 @@ class Markov(object):
         for i in range(len(tweets)):
             tweets[i] = tweets[i].split()
 
+        # generate global lists/dictionaries
         for i in range(len(tweets)):
             self.generate_markov_list(tweets[i])
 
+        # run the markov algorithm
         result = None
         while result == None:
             result = self.create_chain()
-        print(result)
+
+        # reset global lists/dictionaries and return result
+        self.__init__()
+        return result
 
 
 if __name__ == "__main__":
     M = Markov()
-    M.markov('@debcha')
+    res = M.markov('@elonmusk')
+
+    print(res)
