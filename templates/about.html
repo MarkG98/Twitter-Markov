@@ -6,16 +6,42 @@
 
     <!-- latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+      p {
+        text-indent: 2.0em;
+      }
+      .fa-linkedin {
+        background: #3B5998;
+        color: white;
+        font-size: 30px;
+        position: absolute;
+        right: 100px;
+      }
+      .fa-github {
+        color: black;
+        font-size: 30px;
+        position: absolute;
+        right: 140px;
 
+      }
+    </style>
   </head>
   <body>
     {% include 'includes/_navbar.html' %}
     <h1 align="center">About</h1>
-
-    <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/15230570_643106352528345_4134053073034279879_n.jpg?_nc_cat=0&oh=426f39e402160d1e11a27fb0586b1d89&oe=5B84E516" class="img-circle center-block" alt="Cinque Terre" style="width:38%; height:38%">
-
+    <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/15230570_643106352528345_4134053073034279879_n.jpg?_nc_cat=0&oh=426f39e402160d1e11a27fb0586b1d89&oe=5B84E516" class="img-circle center-block" alt="Cinque Terre" style="width:38%; height:38%; ">
+    <div class="container">
+      <p>Mark Goldwater is currently a sophmore at <a href="http://www.olin.edu/" target="_blank">Franklin W. Olin College of Engineering</a>
+        majoring in electrical and computer engineering. He is a high-performing student with record of achievement.
+        Valued research intern, experienced in philanthropic endeavors, and active with engineering education community
+        outreach. Passions include social robotics, remote control planes, and music. For more information check out his
+        Linkedin or Github below.</p>
+    </div>
+    <a href="https://www.linkedin.com/in/mark-g-892273125/" target="_blank" class="fa fa-linkedin"></a>
+    <a href="https://github.com/MarkG98" class="fa fa-github"></a>
   </body>
 
 </html>
