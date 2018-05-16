@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <beta charset="utf-8"/>
+    <title>Markov</title>
+
+    <!-- latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+    {% include 'includes/_navbar.html' %}
+
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="center">Markov Twitter</h1>
+        <p>Markov Twitter takes in a Twitter username and runs their tweets through a Markov Chain algorithm which
+          will create a tweet that sounds like it is written by the user!</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-5">
+        <h3>Enter a Twitter username</h3>
+          <form method="POST" action="/send">
+            <div class="form-group wrapper">
+              <input type="text" name="username" placeholder="ex: @elonmusk">
+            </div>
+            <input class="btn btn-primary" type="submit" value="submit">
+          </form>
+      </div>
+    </div>
+
+  </body>
+
+</html>
