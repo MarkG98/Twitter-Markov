@@ -20,7 +20,7 @@ def send():
         Mgen = Markov()
         res = Mgen.markov(username)
 
-        return render_template('markovres.html', res=res)
+        return render_template('markovres.html', res=res, author=username)
 
     return render_template('index.html')
 
