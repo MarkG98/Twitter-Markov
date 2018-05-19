@@ -19,22 +19,29 @@ class TwitterScraper(list):
         # created api environment with keys
         auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
-        api = tweepy.API(auth)
+        self.api = tweepy.API(auth)
+        self.user = user
 
-        # initialize page counter
-        page = 1
+    def scrape(self):
 
-        while True:
-            tweets = api.user_timeline(screen_name=str(user), page=page, count=200, tweet_mode='extended', include_rts=False)
-            if tweets:
-                for tweet in tweets:
-                    # process status here
-                    self.append(tweet)
-            else:
-                # All done
-                break
-            page += 1  # next page
+        try:
+            # initialize page counter
+            page = 1
 
-        f = open(str(user) + 'Tweets.pickle', 'wb')
-        dump(self, f)
-        f.close()
+            while True:
+                tweets = self.api.user_timeline(screen_name=str(self.user), page=page, count=200, tweet_mode='extended', include_rts=False)
+                if tweets:
+                    for tweet in tweets:
+                        # process status here
+                        self.append(tweet)
+                else:
+                    # All done
+                    break
+                page += 1  # next page
+
+            f = open(str(user) + 'Tweets.pickle', 'wb')
+            dump(self, f)
+            f.close()
+
+        except tweepy.error.TweepError:
+            return -1

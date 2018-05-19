@@ -125,7 +125,10 @@ class Markov(object):
         """
 
         # scrape and organize tweets
-        scrape = TwitterScraper(user)
+        TS = TwitterScraper(user)
+        scrape = TS.scrape()
+        if scrape == -1:
+            return "Invalid username"
         f = open(user + 'Tweets.pickle', 'rb')
         new_tweets = load(f)
 
