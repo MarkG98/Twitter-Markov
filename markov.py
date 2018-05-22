@@ -13,7 +13,7 @@ class Markov(object):
 
         self.end_punctuation = ".!?"
 
-    def generate_markov_list(self, data, prefix_length=3):
+    def generate_markov_list(self, data, prefix_length=5):
 
         """
         This function iterates throught the possible prefixes in the data inputed, and puts
