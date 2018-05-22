@@ -7,7 +7,7 @@ This program uses markov analysis to generate original tweets for any twitter us
 The only non-core Python library that is required to run the script is tweepy. One can install it using pip as so: <br /> `pip install tweepy`
 
 ## How to Use
-Websiite coming soon!
+Visit [http://markg98.pythonanywhere.com/](http://markg98.pythonanywhere.com/)!
 
 ## Examples
 ### Donald Trump
