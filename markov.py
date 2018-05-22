@@ -153,6 +153,6 @@ class Markov(object):
 
 if __name__ == "__main__":
     M = Markov()
-    res = M.markov('@elonmusk')
+    res = M.markov('@debcha')
 
     print(res)
