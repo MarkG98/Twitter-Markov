@@ -18,9 +18,8 @@ def send():
     if request.method == 'POST':
         username = request.form['username']
         Mgen = Markov()
-        res = Mgen.markov(username)
+        res, error = Mgen.markov(username)
 
-        error = None
         return render_template('markovres.html', res=res, author=username, error=error)
 
     return render_template('index.html')

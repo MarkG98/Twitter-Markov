@@ -124,10 +124,14 @@ class Markov(object):
         """
 
         # scrape and organize tweets
+        result = ""
+        error = False
+
         TS = TwitterScraper(user)
         scrape = TS.scrape()
         if scrape == -1:
-            return "Invalid username"
+            error = True
+            return result, error
         f = open(user + 'Tweets.pickle', 'rb')
         new_tweets = load(f)
 
@@ -147,7 +151,7 @@ class Markov(object):
 
         # reset global lists/dictionaries and return result
         self.__init__()
-        return result
+        return result, error
 
 
 if __name__ == "__main__":

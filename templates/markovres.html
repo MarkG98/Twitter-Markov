@@ -17,10 +17,19 @@
   <body>
     {% include 'includes/_navbar.html' %}
 
-    <blockquote class="clockquote">
-      <p class="mb-0">{{res}}</p>
-      <footer class="blockquote-footer">{{author}}</footer>
-    </blockquote
+    {% if error == False %}
+      <blockquote class="clockquote">
+        <p class="mb-0">{{res}}</p>
+        <footer class="blockquote-footer">{{author}}</footer>
+      </blockquote>
+    {% else %}
+      <p align="center" class="mb-0">Invalid Username</p>
+    {% endif %}
+
+    <div class="col-md-4 text-center">
+      <button align="center" type="button" class="btn btn-primary active" onclick="location.href = '/'";>Try Again!</button>
+    </div>
+
   </body>
 
 </html>
